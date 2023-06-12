@@ -18,7 +18,7 @@ CREATE TABLE TRUONG (
 
 
 -- Tạo clustered index cho bảng TRUONG
-CREATE CLUSTERED INDEX IDX_TRUONG_MATR ON TRUONG (MATR);
+
 
 -- Tạo bảng HS
 
@@ -34,7 +34,7 @@ CREATE TABLE HS (
 
 
 -- Tạo clustered index cho bảng HS
-CREATE CLUSTERED INDEX IDX_HS_MAHS ON HS (MAHS);
+
 
 
 -- Tạo bảng HOC
@@ -52,4 +52,4 @@ CREATE TABLE HOC (
 
 
 -- Tạo clustered index cho bảng HOC
-CREATE CLUSTERED INDEX IDX_HOC_MATR_MAH_NAMHOC ON HOC (MATR, MAHS, NAMHOC);
+
