@@ -1,10 +1,36 @@
 import random
 import csv
+import pandas as pd
+
+# Tạo dữ liệu cho bảng TRUONG
+
+
+# Đường dẫn tới tệp Excel nguồn dữ liệu
+excel_file = "C:\\Users\\buivu\\OneDrive\\Desktop\\đồ án 2\\danh-sach-truong-thpt-o-tphcm.xlsx"
+
+# Đọc dữ liệu từ tệp Excel
+df = pd.read_excel(excel_file)
+
+# Lấy dữ liệu từ cột MATR trong tệp Excel
+matr_data = df['MATR'].tolist()
+tentr_data= df['TENTR'].tolist()
+dchitr_data= df['DCHITR'].tolist()
 
 # Tạo dữ liệu cho bảng TRUONG
 truong_data = []
-for i in range(100):
-    truong_data.append([f'Truong{i+1}', f'Dia chi {i+1}'])
+for matr, tentr, dchitr in zip(matr_data, tentr_data, dchitr_data):
+    truong_data.append([matr, tentr, dchitr])
+
+# Ghi dữ liệu vào tệp CSV
+with open('truong.csv', 'w', newline='', encoding='utf-8') as truong_file:
+    writer = csv.writer(truong_file)
+    writer.writerow(['MATR', 'TENTR', 'DCHITR'])
+    writer.writerows(truong_data)
+
+
+# Sửa xong bảng TRUONG
+
+
 
 # Tạo dữ liệu cho bảng HS
 hs_data = []
