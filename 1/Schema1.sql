@@ -1,14 +1,14 @@
 drop database if exists TRUONGHOC1;
 
--- Tạo cơ sở dữ liệu TRUONGHOC1
+-- tao csdl TRUONGHOC1
 create database TRUONGHOC1;
 
 
--- Sử dụng cơ sở dữ liệu TRUONGHOC1
+--  dung csdl TRUONGHOC1
 USE TRUONGHOC1;
 
 
--- Tạo bảng TRUONG
+-- tao bang TRUONG
 
 CREATE TABLE TRUONG (
     MATR CHAR(6) PRIMARY KEY,
@@ -17,13 +17,11 @@ CREATE TABLE TRUONG (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- Tạo clustered index cho bảng TRUONG
 
-
--- Tạo bảng HS
+-- tao bang HS
 
 CREATE TABLE HS (
-    MAHS char(9) PRIMARY KEY,  // HS1000000
+    MAHS char(9) PRIMARY KEY,  
     HO VARCHAR(50) NOT NULL,
     TEN VARCHAR(50) NOT NULL,
     CCCD VARCHAR(12),
@@ -33,11 +31,10 @@ CREATE TABLE HS (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- Tạo clustered index cho bảng HS
 
 
 
--- Tạo bảng HOC
+-- tao bang hoc
 CREATE TABLE HOC (
     MATR char(9),
     MAHS char(9),
@@ -46,10 +43,8 @@ CREATE TABLE HOC (
     XEPLOAI varchar(20) NOT NULL,
     KQUA varchar(20) NOT NULL,
     PRIMARY KEY (MATR, MAHS, NAMHOC),
-    FOREIGN KEY (MATR) REFERENCES TRUONG (MAmTR),
-    FOREIGN KEY (MAHS) REFERENCES HS (MAHS),
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    FOREIGN KEY (MATR) REFERENCES TRUONG (MATR),
+    FOREIGN KEY (MAHS) REFERENCES HS (MAHS)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
--- Tạo clustered index cho bảng HOC
 
