@@ -3,9 +3,12 @@ import csv
 import pandas as pd
 import json
 import mysql.connector
+from faker import Faker
+from faker.providers import address, person
+import random
 
-# Tạo dữ liệu cho bảng TRUONG
 
+#  bảng TRUONG
 
 # Đường dẫn tới tệp Excel nguồn dữ liệu
 excel_file = "C:\\Users\\buivu\\OneDrive\\Desktop\\đồ án 2\\danh-sach-truong-thpt-o-tphcm.xlsx"
@@ -30,8 +33,7 @@ with open('truong.csv', 'w', newline='', encoding='utf-8') as truong_file:
     writer.writerows(truong_data)
 
 
-# Sửa xong bảng TRUONG
-
+# bảng HS
 
 
 # Tạo dữ liệu cho bảng HS
@@ -41,13 +43,15 @@ for i in range(1000000):
 
 
 
-# Ghi dữ liệu vào các tệp CSV
+# Ghi dữ liệu vào tệp CSV
 
 with open('hs.csv', 'w', newline='') as hs_file:
     writer = csv.writer(hs_file)
-    writer.writerow(['Ten HS', 'Lop'])
+    writer.writerow(['MAHS', 'HO','TEN','CCCD','NTNS','DCHI_HS'])
     writer.writerows(hs_data)
 
+
+# bảng hoc
 
 
 # Tạo dữ liệu cho bảng HOC
@@ -58,11 +62,11 @@ for hs_row in hs_data:
 
 
 
-# Ghi dữ liệu vào các tệp CSV
+# Ghi dữ liệu vào tệp CSV
 
 with open('hoc.csv', 'w', newline='') as hoc_file:
     writer = csv.writer(hoc_file)
-    writer.writerow(['Ten HS', 'Mon hoc'])
+    writer.writerow(['MATR', 'MAHS','NAMHOC','DIEMTB','XEPLOAI','KQUA'])
     writer.writerows(hoc_data)
 
 
@@ -123,3 +127,6 @@ conn.commit()
 # Đóng kết nối và con trỏ
 cursor.close()
 conn.close()
+
+
+
