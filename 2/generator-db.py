@@ -95,7 +95,6 @@ for hs_row in hs_data:
 
 
 # Ghi dữ liệu vào tệp CSV
-
 with open('hoc.csv', 'w', newline='') as hoc_file:
     writer = csv.writer(hoc_file)
     writer.writerow(['MATR', 'MAHS','NAMHOC','DIEMTB','XEPLOAI','KQUA'])
