@@ -5,7 +5,7 @@ create database TRUONGHOC1;
 
 
 --  dung csdl TRUONGHOC1
-USE TRUONGHOC1;
+USE TRUONGHOC2;
 
 
 -- tao bang TRUONG
