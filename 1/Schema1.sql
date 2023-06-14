@@ -34,7 +34,7 @@ CREATE TABLE HS (
 
 
 
-drop table if existst hoc;
+drop table if exists hoc;
 -- tao bang hoc
 CREATE TABLE HOC (
     MATR char(3),
