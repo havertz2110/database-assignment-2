@@ -19,7 +19,7 @@ excel_file = "C:\\Users\\buivu\\OneDrive\\Desktop\\đồ án 2\\danh-sach-truong
 df = pd.read_excel(excel_file)
 
 # Lấy dữ liệu từ cột MATR trong tệp Excel
-matr_data = df['MATR'].astype(int).tolist()
+matr_data = df['MATR'].astype(int).apply(lambda x: str(x).zfill(3)).tolist()
 tentr_data = df['TENTR'].tolist()
 dchitr_data = df['DCHITR'].tolist()
 
@@ -100,13 +100,17 @@ conn = mysql.connector.connect(
 # Tạo con trỏ để thực hiện các truy vấn
 cursor = conn.cursor()
 
+
 # Chuyển dữ liệu từ tệp CSV vào bảng TRUONG
 with open('truong.csv', 'r', encoding='utf-8') as truong_file:
     truong_data = csv.reader(truong_file)
     next(truong_data)  # Bỏ qua dòng tiêu đề
     for row in truong_data:
         matr, tentr, dchitr = row
-        cursor.execute("INSERT INTO TRUONG VALUES ('{}', '{}', '{}')".format(matr, tentr, dchitr))
+        query = "INSERT INTO TRUONG VALUES (%s, %s, %s)"
+        values = (matr, tentr, dchitr)
+        cursor.execute(query, values)
+
 
 # Chuyển dữ liệu từ tệp CSV vào bảng HS
 with open('hs.csv', 'r', encoding='utf-8') as hs_file:
@@ -114,8 +118,11 @@ with open('hs.csv', 'r', encoding='utf-8') as hs_file:
     next(hs_data)  # Bỏ qua dòng tiêu đề
     for row in hs_data:
         mahs, ho, ten, cccd, ntns, dia_chi = row
-        cursor.execute("INSERT INTO HS VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(mahs, ho, ten, cccd, ntns, dia_chi))
+        query = "INSERT INTO HS VALUES (%s, %s, %s, %s, %s, %s)"
+        values = (mahs, ho, ten, cccd, ntns, dia_chi)
+        cursor.execute(query, values)
 
+# bằng c
 # Lưu các thay đổi vào cơ sở dữ liệu
 conn.commit()
 
