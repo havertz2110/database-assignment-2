@@ -9,7 +9,7 @@ USE TRUONGHOC1;
 
 
 -- tao bang TRUONG
-
+drop table if exists truong;
 CREATE TABLE TRUONG (
     MATR CHAR(3) PRIMARY KEY,
 
@@ -20,7 +20,7 @@ CREATE TABLE TRUONG (
 
 
 -- tao bang HS
-
+drop tables if exists hs;
 CREATE TABLE HS (
     MAHS char(9) PRIMARY KEY,  
     HO VARCHAR(64) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE HS (
 
 
 
-
+drop table if existst hoc;
 -- tao bang hoc
 CREATE TABLE HOC (
     MATR char(3),
