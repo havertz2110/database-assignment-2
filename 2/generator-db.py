@@ -5,7 +5,6 @@ import mysql.connector
 from faker import Faker
 import random
 from random import choice
-import pymysql
 
 
 
