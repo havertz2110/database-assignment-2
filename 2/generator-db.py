@@ -5,7 +5,8 @@ import mysql.connector
 from faker import Faker
 import random
 from random import choice
-
+from collections import Counter
+from datetime import date, timedelta
 
 
 #  bảng TRUONG
@@ -37,7 +38,7 @@ with open('truong.csv', 'w', newline='', encoding='utf-8') as truong_file:
 
 # Tạo dữ liệu cho bảng HS
 fake = Faker('vi_VN')
-ho_list={ 'Trần', 'Hoàng','Trương', ' Lý', 'Vương', ' Ngô', ' Lưu', 'Thái', 'Dương', 'Từ', ' Tôn', 'Mã', ' Châu', ' Hồ', 'Quách', 'Hà', 'Cao', 'Lâm', ' La', 'Trịnh', 'Lương', 'Hàn', 'Chu', 'Triệu', 'Nguyễn', ' Lê', 'Vũ', 'Võ', 'Phùng', 'Tô', 'Đường', 'Đinh', 'Đoàn', 'Trịnh', 'Đào', 'Phạm', 'Phùng', 'Mai', 'Tô', 'Phí', 'Tạ', 'Thân', 'Lâm', 'Tống', 'Hoa', 'Từ', 'Thường', 'Tiêu', 'Ngọ', 'Kim', 'Tôn Thất', 'Triệu', 'Mạc', 'Thái', 'Thạch', 'Quách', 'Đàm', 'Đồng Văn', 'Huỳnh', 'Phan', 'Đặng', 'Bùi', 'Hồ', 'Đỗ', 'Âu Dương', 'Dư', 'Nghiêm', 'Viên', 'Ma', 'Mạch', 'Lỗ', 'Tiêu', 'Thẩm', 'Trình', 'Uông', 'Ung', 'Ưng', 'Vi', 'Văn', 'Yên', 'Nhâm', 'Doãn', 'Chung', 'Cáp', 'Ái Tân Giác La', 'Thành Cát', 'Mãn', 'Nỗ Nhĩ ', 'Lã', 'Khuất', 'Khúc', 'Khâu', 'Khổng', 'Kha', 'Hứa', 'Cáp', 'Bế', 'Bầnh', 'Chiêm', 'Chế', 'Cồ', 'Cổ', 'Phó', 'Hạ', 'Hầu', 'Kiều', 'Tùy', 'Lục', 'Đồng ', 'Đổng' }
+ho_list={ 'Trần', 'Hoàng','Trương', 'Lý', 'Vương', 'Ngô', 'Lưu', 'Thái', 'Dương', 'Từ', 'Tôn', 'Mã', 'Châu', 'Hồ', 'Quách', 'Hà', 'Cao', 'Lâm', 'La', 'Trịnh', 'Lương', 'Hàn', 'Chu', 'Triệu', 'Nguyễn', 'Lê', 'Vũ', 'Võ', 'Đường', 'Đinh', 'Đoàn', 'Trịnh', 'Đào', 'Phạm', 'Phùng', 'Mai', 'Tô', 'Phí', 'Tạ', 'Thân', 'Lâm', 'Tống', 'Hoa', 'Từ', 'Thường', 'Tiêu', 'Ngọ', 'Kim', 'Tôn Thất', 'Triệu', 'Mạc', 'Thái', 'Thạch', 'Quách', 'Đàm', 'Đồng Văn', 'Huỳnh', 'Phan', 'Đặng', 'Bùi', 'Hồ', 'Đỗ', 'Âu Dương', 'Dư', 'Nghiêm', 'Viên', 'Ma', 'Mạch', 'Lỗ', 'Tiêu', 'Thẩm', 'Trình', 'Uông', 'Ung', 'Ưng', 'Vi', 'Văn', 'Yên', 'Nhâm', 'Doãn', 'Chung', 'Cáp', 'Ái Tân Giác La', 'Thành Cát', 'Mãn', 'Nỗ Nhĩ ', 'Lã', 'Khuất', 'Khúc', 'Khâu', 'Khổng', 'Kha', 'Hứa', 'Cáp', 'Bế', 'Bầnh', 'Chiêm', 'Chế', 'Cồ', 'Cổ', 'Phó', 'Hạ', 'Hầu', 'Kiều', 'Tùy', 'Lục', 'Đồng ', 'Đổng' }
 ten_list={ 'Trung', 'Quân', 'Hải', 'Đức', 'Ân', 'An', 'Thịnh', 'Linh', 'Hiếu', 'Quốc', 'Duy', 'Tuấn', 'Tân', 'Đăng', 'Nam', 'Thành', 'Việt', 'Khánh', 'Vũ', 'Phong', 'Cường', 'Tâm', 'Nhật', 'Sơn', 'Phúc', 'Thái', 'Lâm', 'Tấn', 'Ngọc', 'Đạt', 'Hiệp', 'Tài', 'Dũng', 'Hồng', 'Huy', 'Hà', 'Khải', 'Thiện', 'Nghĩa ', 'Vương', 'Tiến', 'Vinh', 'Hoàng', 'Đông ', 'Nhân', 'Khắc', 'Thanh', 'Tùng', 'Thắng', 'Hùng', 'Bình', 'Trí', 'Kiên', 'Tuệ', 'Hào', 'Thế', 'Thiên', 'Vĩ', 'Hoa', 'Dương', 'Quang', 'Sỹ', 'Lượng', 'Xuân', 'Phương', 'Tú', 'Tuyến', 'Tuyết', 'Long', 'Hưng', 'Hòa', 'Khoa', 'Khôi', 'Khang', 'Nhất', 'Nhị', 'Tam', 'Tứ', 'Ngũ', 'Lục', 'Liên', 'Kim', 'Chung', 'Nhựt', 'Ưng', 'Thắm', 'Quỳnh', 'Giang', 'Quế', 'Quy', 'Quyết', 'Thất', 'Bát', 'Cửu', 'Tây', 'Bắc', 'Tông', 'Tín', 'Kỳ', 'Thư', 'Cát', 'Tường', 'Kiều', 'Anh', 'Tuyền', 'Mĩ', 'Pháp', 'Vân', 'Văn'}
 phuong_quan = {
     'Quận 1': ['Phường Tân Định','Phường Cầu Kho','Phường Cầu Ông Lãnh', 'Phường Cô Giang','Phường Nguyễn Cư Trinh', 'Phường Đa Kao', 'Phường Bến Nghé', 'Phường Bến Thành', 'Phường Nguyễn Thái Bình', 'Phường Phạm Ngũ Lão'],
@@ -66,12 +67,15 @@ phuong_quan = {
 ho_list = list(ho_list)
 ten_list = list(ten_list)
 hs_data = []
+birth_years = [2004, 2005, 2006]
+birth_years_weights = [1, 1, 1]
 cccd_numbers_male = list(range(1, 500001))  # Số căn cước công dân cho giới tính nam
 cccd_numbers_female = list(range(1, 500001))  # Số căn cước công dân cho giới tính nữ
 random.shuffle(cccd_numbers_male)  # Sắp xếp ngẫu nhiên
 random.shuffle(cccd_numbers_female)  # Sắp xếp ngẫu nhiên
+birth_year_counter = Counter()  # Đếm số lượng học sinh theo từng năm sinh
 for i in range(1, 1000001):
-    mahs = f"HS{i:07}"
+    mahs = f"HS{i + 3:02}"
     ho = random.choice(ho_list)
     ten = random.choice(ten_list)
     if i <= 500000:
@@ -81,7 +85,14 @@ for i in range(1, 1000001):
         gioi_tinh = "F"
         cccd = f"F{cccd_numbers_female[i - 500001]:06}"
 
-    ntns = fake.date_of_birth(minimum_age=17, maximum_age=19).strftime("%d/%m/%Y")
+    birth_year = random.choices(birth_years, weights=birth_years_weights)[0]
+    birth_year_counter[birth_year] += 1
+
+    min_birth_date = date(birth_year, 1, 1)
+    max_birth_date = date(birth_year, 12, 31)
+    random_birth_date = min_birth_date + timedelta(days=random.randint(0, 365))
+
+    ntns = random_birth_date.strftime("%d/%m/%Y")
     quan = choice(list(phuong_quan.keys()))
     phuong = choice(phuong_quan[quan])
     dia_chi = f"{phuong}, {quan}, Thành phố Hồ Chí Minh"
