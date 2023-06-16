@@ -1,5 +1,4 @@
 import csv
-import pandas as pd
 import json
 import mysql.connector
 from faker import Faker
@@ -7,7 +6,10 @@ import random
 from random import choice
 from collections import Counter
 from datetime import date, timedelta
+import time
 
+# Lưu thời điểm bắt đầu
+start_time = time.time()
 
 #  bảng TRUONG
 
@@ -69,8 +71,7 @@ random.shuffle(cccd_numbers_male)  # Sắp xếp ngẫu nhiên
 random.shuffle(cccd_numbers_female)  # Sắp xếp ngẫu nhiên
 birth_year_counter = Counter()  # Đếm số lượng học sinh theo từng năm sinh
 for i in range(1, 1000001):
-    mahs = f"HS{(i + 3):03}".zfill(9)
-
+    mahs = f"HS{i:07}"
     ho = random.choice(ho_list)
     ten = random.choice(ten_list)
     if i <= 500000:
@@ -103,8 +104,8 @@ with open('hs.csv', 'w', newline='', encoding='utf-8') as hs_file:
 
 
 # Đọc thông tin xác thực từ file cấu hình
-with open('config.json') as config_file:
-    config = json.load(config_file)
+#with open('config.json') as config_file:
+#   config = json.load(config_file)
 
 # Ở đây vì em muốn nó mang 1 chút tính bảo mật, nên đã sử dụng 1 file cấu hình mạng để phòng khi mã nguồn có bị lộ ra thì các hacker vẫn không thể thực hiện sql injection được database gây mất mát dữ liệu
 # Ý tưởng em học được qua những ngày chơi CTF và học pentest trên mạng, và vì muốn bám sát thực tế nhất có thể nên em đã thêm vào
@@ -116,17 +117,29 @@ with open('config.json') as config_file:
 #  "database": "truonghoc1",
 # }
 
-
 # Thiết lập kết nối với cơ sở dữ liệu MySQL
-conn = mysql.connector.connect(
-    host=config['host'],
-    user=config['user'],
-    password=config['password'],
-    database=config['database']
-)
+#conn = mysql.connector.connect(
+#    host=config['host'],
+#    user=config['user'],
+#    password=config['password'],
+#    database=config['database']
+#)
 
 # ĐÃ HẾT PHẦN QUAN TRỌNG
 
+# Nhập thông tin kết nối trực tiếp
+host = "localhost"
+user = "root"
+password = "211031"
+database = "truonghoc1"
+
+# Thiết lập kết nối với cơ sở dữ liệu MySQL
+conn = mysql.connector.connect(
+    host=host,
+    user=user,
+    password=password,
+    database=database
+)
 
 # Tạo con trỏ để thực hiện các truy vấn
 cursor = conn.cursor()
@@ -153,11 +166,6 @@ with open('hs.csv', 'r', encoding='utf-8') as hs_file:
         values = (mahs, ho, ten, cccd, ntns, dia_chi)
         cursor.execute(query, values)
 
-# bằng c
-# Lưu các thay đổi vào cơ sở dữ liệu
-conn.commit()
-
-
 
 
 # Lưu các thay đổi vào cơ sở dữ liệu
@@ -167,4 +175,14 @@ conn.commit()
 cursor.close()
 conn.close()
 
-print("đã xong câu 2")
+
+
+
+# Lưu thời điểm kết thúc
+end_time = time.time()
+
+# Tính thời gian chạy
+execution_time = end_time - start_time
+
+# In ra thời gian chạy
+print(f"Đã thực thi xong câu 2, thời gian chạy câu 2 mất: {execution_time} giây = {execution_time/60} phút")
