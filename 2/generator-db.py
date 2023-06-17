@@ -164,6 +164,15 @@ with open('hs.csv', 'r', encoding='utf-8') as hs_file:
         values = (mahs, ho, ten, cccd, ntns, dia_chi)
         cursor.execute(query, values)
 
+#Chuyển dữ liệu từ tệp CSV vào bảng hoc
+with open('hoc.csv', 'r', encoding='utf-8') as hoc_file:
+    hoc_data = csv.reader(hoc_file)
+    next(hoc_data)  # Bỏ qua dòng tiêu đề
+    for row in hoc_data:
+        matr, mahs, namhoc, diemtb, xeploai, ketqua = row
+        query = "INSERT INTO HS VALUES (%s, %s, %s, %s, %s, %s)"
+        values = (matr, mahs, namhoc, diemtb, xeploai, ketqua)
+        cursor.execute(query, values)
 
 
 # Lưu các thay đổi vào cơ sở dữ liệu
