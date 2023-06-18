@@ -415,7 +415,7 @@ with open('hoc.csv', 'r', encoding='utf-8') as hoc_file:
     next(hoc_data)  # Bỏ qua dòng tiêu đề
     for row in hoc_data:
         matr, mahs, namhoc, diemtb, xeploai, ketqua = row
-        query = "INSERT IGNORE INTO HS VALUES (%s, %s, %s, %s, %s, %s)"
+        query = "INSERT IGNORE INTO HOC VALUES (%s, %s, %s, %s, %s, %s)"
         values = (matr, mahs, namhoc, diemtb, xeploai, ketqua)
         cursor.execute(query, values)
 
@@ -434,3 +434,15 @@ execution_time = end_time - start_time
 
 # In ra thời gian chạy
 print(f"Đã thực thi xong câu 2, thời gian chạy câu 2 mất: {execution_time} giây = {execution_time / 60} phút")
+
+# Nếu gặp lỗi như thế này trong khi chạy:
+#raise get_exception(packet)
+#mysql.connector.errors.DatabaseError: 1205(HY000): Lock wait timeoutexceeded; try restartingtransaction
+#Lỗi này sẽ gặp ở tùy máy khác nhau, nguyên do là nếu nội dung cơ sở dữ liệu mà ta đang cố truy cập
+# đã bị khóa bởi một quy trình trước đó. MySQL sẽ đợi một khoảng thời gian nhất định để khóa được gỡ bỏ
+# trước khi từ bỏ và đưa ra lỗi đó.Lúc này, ta có thể fix bằng dùng lệnh "SHOW PROCESSLIST;" để xem các tiến trình đang chạy,
+# nếu có, ta thực thi lệnh "kill {id}" để kết thúc các tiến trình đó
+# Nếu vẫn còn, ta vào C:\ProgramData\MySQL\MySQL Server 8.0\my.ini hay my.cnf và thêm
+#[mysqld]
+#innodb_lock_wait_timeout=120
+# Lí do là vì thời gian chờ khóa cho InnoDB mặc định là 50 giây, nếu chờ lâu hơn sẽ dẫn đến lỗi, do đó, ta sẽ tăng giá trị thời gian chờ khóa cho InnoDB bằng cách đặt innodb_lock_wait_timeout,
