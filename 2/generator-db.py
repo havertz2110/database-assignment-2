@@ -409,6 +409,7 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 # Chuyển dữ liệu từ tệp CSV vào bảng TRUONG
+# Transfer data from csv file to table TRUONG
 with open('truong.csv', 'r', encoding='utf-8') as truong_file:
     truong_data = csv.reader(truong_file)
     next(truong_data)  # Bỏ qua dòng tiêu đề
@@ -419,6 +420,7 @@ with open('truong.csv', 'r', encoding='utf-8') as truong_file:
         cursor.execute(query, values)
 
 # Chuyển dữ liệu từ tệp CSV vào bảng HS
+# Transfer data from csv file to table HS
 with open('hs.csv', 'r', encoding='utf-8') as hs_file:
     hs_data = csv.reader(hs_file)
     next(hs_data)  # Bỏ qua dòng tiêu đề
@@ -429,7 +431,7 @@ with open('hs.csv', 'r', encoding='utf-8') as hs_file:
         cursor.execute(query, values)
 
 # Chuyển dữ liệu từ tệp CSV vào bảng hoc
-# 
+# Transfer data from csv file to table HOC
 with open('hoc.csv', 'r', encoding='utf-8') as hoc_file:
     hoc_data = csv.reader(hoc_file)
     next(hoc_data)  # Bỏ qua dòng tiêu đề
@@ -460,14 +462,28 @@ execution_time = end_time - start_time
 # Print running time
 print(f"Đã thực thi xong câu 2, thời gian chạy câu 2 mất: {execution_time} giây = {execution_time / 60} phút")
 
-# Nếu gặp lỗi như thế này trong khi chạy:
-#raise get_exception(packet)
-#mysql.connector.errors.DatabaseError: 1205(HY000): Lock wait timeoutexceeded; try restartingtransaction
-#Lỗi này sẽ gặp ở tùy máy khác nhau, nguyên do là nếu nội dung cơ sở dữ liệu mà ta đang cố truy cập
-# đã bị khóa bởi một quy trình trước đó. MySQL sẽ đợi một khoảng thời gian nhất định để khóa được gỡ bỏ
-# trước khi từ bỏ và đưa ra lỗi đó.Lúc này, ta có thể fix bằng dùng lệnh "SHOW PROCESSLIST;" để xem các tiến trình đang chạy,
+# Nếu gặp lỗi như thế này trong khi chạy / If you encounter this error while running:
+# |raise get_exception(packet)
+# |mysql.connector.errors.DatabaseError: 1205(HY000): Lock wait timeoutexceeded; try restartingtransaction
+
+# Ta sẽ thấy lỗi như thế mày nếu nội dung cơ sở dữ liệu mà ta đang cố truy cập 
+# You will see this message if database contents you are trying to access 
+
+# đã bị khóa bởi một tiến trình trước đó. MySQL sẽ đợi một khoảng thời gian nhất định để khóa được gỡ bỏ
+# has been locked by a previous process.  MySQL will wait a certain amount of time for the lock to be removed
+
+# trước khi từ bỏ và đưa ra lỗi đó.Lúc này, ta có thể fix bằng dùng lệnh "SHOW PROCESSLIST;" để xem các tiến trình đang chặn/ đang ngủ
+# before it gives up and throws that error. To fix this, we can use "SHOW PROCESSLIST" to trace out those blocking/sleeping process
+
 # nếu có, ta thực thi lệnh "kill {id}" để kết thúc các tiến trình đó
-# Nếu vẫn còn, ta vào C:\ProgramData\MySQL\MySQL Server 8.0\my.ini hay my.cnf và thêm
+# Once you locate the blocking/sleep process, find it's id and run "kill{id}" in order to finish the process
+
+# Nếu vẫn còn, ta vào C:\ProgramData\MySQL\MySQL Server 8.0\my.ini hay my.cnf, tìm [mysqld] và thêm cái này ngay dưới:
+# IF you stil see the message, we access to this C:\ProgramData\MySQL\MySQL Server 8.0\my.ini or my.cnf, find [mysqld] and add this right under it :
+
 #[mysqld]
 #innodb_lock_wait_timeout=120
+
 # Lí do là vì thời gian chờ khóa cho InnoDB mặc định là 50 giây, nếu chờ lâu hơn sẽ dẫn đến lỗi, do đó, ta sẽ tăng giá trị thời gian chờ khóa cho InnoDB bằng cách đặt innodb_lock_wait_timeout,
+# The reason for this is because the innodb_lock_wait_timeout, default is 50 sec. IF somethins is longer than that, it will throw an error like before, thus, we  consider increasing the lock wait timeout value 
+# for InnoDB
