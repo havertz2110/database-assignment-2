@@ -196,8 +196,8 @@ ten_list = {'Trung', 'Quân', 'Hải', 'Đức', 'Ân', 'An', 'Thịnh', 'Linh',
             'Kim', 'Chung', 'Nhựt', 'Ưng', 'Thắm', 'Quỳnh', 'Giang', 'Quế', 'Quy', 'Quyết', 'Thất', 'Bát', 'Cửu', 'Tây',
             'Bắc', 'Tông', 'Tín', 'Kỳ', 'Thư', 'Cát', 'Tường', 'Kiều', 'Anh', 'Tuyền', 'Mĩ', 'Pháp', 'Vân', 'Văn'}
 
-# Tạo danh sách các địa chỉ bao gồm các quận và phường của quận đó ( bảo đảm tính thực tế )
-# WE create a list of address include of districs and their belonging wards ( assure reality )
+# Tạo danh sách các địa chỉ bao gồm các quận và phường của quận đó
+# We create a list of addresses including districts and wards of that district 
 phuong_quan = {
     'Quận 1': ['Phường Tân Định', 'Phường Cầu Kho', 'Phường Cầu Ông Lãnh', 'Phường Cô Giang', 'Phường Nguyễn Cư Trinh',
                'Phường Đa Kao', 'Phường Bến Nghé', 'Phường Bến Thành', 'Phường Nguyễn Thái Bình',
@@ -259,8 +259,13 @@ phuong_quan = {
                       'Xã Tam Thôn Hiệp', 'Xã Thạnh An'],
 }
 
+#
+#
 ho_list = list(ho_list)
 ten_list = list(ten_list)
+
+#
+#
 hs_data = []
 birth_years = [2004, 2005, 2006]
 birth_years_weights = [1, 1, 1]
@@ -299,8 +304,6 @@ with open('hs.csv', 'w', newline='', encoding='utf-8') as hs_file:
     writer.writerows(hs_data)
 
 
-# bảng hoc
-
 # tạo dữ liệu cho bảng hoc
 
 
@@ -316,7 +319,8 @@ def generate_xeploai(diemtb):
     else:
         return "Yếu"
 
-
+# Tạo 1 hàm đê tính kết quả năm học dựa trên xếp loại
+# Create 
 def generate_kqua(xeploai):
     if xeploai == "Yếu":
         return "Chưa hoàn thành"
