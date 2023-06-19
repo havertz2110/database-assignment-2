@@ -9,10 +9,14 @@ from datetime import date, timedelta, datetime
 import time
 
 # Lưu thời điểm bắt đầu
+# Save start time
 start_time = time.time()
 
-#  bảng TRUONG
+# Đầu tiên, ta tạo bảng TRUONG
+# First of all, we create table TRUONG
 
+# Ta tạo danh sách các mã trường, aka matr. Ta lấy 200 trường THPT ở trên TP.HCM và đặt từ 001 đến 200
+# We create a list of School Code, aka matr. We take 200 highschool in HCM city and place respectively from 001 to 200
 matr_list = ['001', '002', '003', '004', '005', '006', '007', '008', '009', '010', '011', '012', '013', '014', '015',
              '016', '017', '018', '019', '020', '021', '022', '023', '024', '025', '026', '027', '028', '029', '030',
              '031', '032', '033', '034', '035', '036', '037', '038', '039', '040', '041', '042', '043', '044', '045',
@@ -28,6 +32,8 @@ matr_list = ['001', '002', '003', '004', '005', '006', '007', '008', '009', '010
              '181', '182', '183', '184', '185', '186', '187', '188', '189', '190', '191', '192', '193', '194', '195',
              '196', '197', '198', '199', '200']
 
+# Ta tạo danh sách các tên trường, aka tentr.
+# We create a list of School Name, aka tentr.
 tentr_list = ['THPT Bùi Thị Xuân', 'THPT Trưng Vương', 'THPT Giồng Ông Tố', 'THPT Nguyễn Thị Minh Khai',
               'THPT Lê Quý Đôn', 'THPT Nguyễn Trãi', 'Phổ thông Năng khiếu thể thao Olympic', 'THPT Hùng Vương',
               'THPT Mạc Đĩnh Chi', 'THPT Bình Phú', 'THPT Lê Thánh Tôn', 'THPT Lương Văn Can', 'THPT Ngô Gia Tự',
@@ -83,6 +89,8 @@ tentr_list = ['THPT Bùi Thị Xuân', 'THPT Trưng Vương', 'THPT Giồng Ông
               'Tiểu học THCS và THPT Úc Châu'
               ]
 
+# Ta tạo danh sách các địa chỉ trường, aka dchitr
+# We create a list of School Address, aka dchitr
 dchitr_list = ['73 - 75 Bùi Thị Xuân', '3 Nguyễn Bỉnh Khiêm', '200/10 Nguyễn Thị Định', '275 Điện Biên Phủ',
                '110 Nguyễn Thị Minh Khai Phường 6 Quận 3 TP.Hồ Chí Minh', '364 Nguyễn Tất Thành',
                'Đại học Thể dục thể thao TP. Hồ Chí Minh - Khu phố 6 - phường Linh Trung - Quận Thủ Đức - TP. Hồ Chí Minh',
@@ -149,19 +157,25 @@ dchitr_list = ['73 - 75 Bùi Thị Xuân', '3 Nguyễn Bỉnh Khiêm', '200/10 N
                ]
 
 # Kết hợp các danh sách thành một danh sách dữ liệu
+# After creating those lists, we combine them into 1 data list
 data = zip(matr_list, tentr_list, dchitr_list)
 
 # Ghi dữ liệu vào tệp CSV
+# Write all those generated data into CSV file for further works
 with open('truong.csv', 'w', newline='', encoding='utf-8') as truong_file:
     writer = csv.writer(truong_file)
     writer.writerow(['MATR', 'TENTR', 'DCHITR'])
     writer.writerows(data)
 
-# bảng HS
+# Tiếp theo, chúng ta tạo bảng HS
+# First of all, we create table HS
 
-
-# Tạo dữ liệu cho bảng HS
+# Ta sử dụng Faker để tạo dữ liệu 1 cách random
+# We use Faker to generate data randomly
 fake = Faker('vi_VN')
+
+# Ta tạo danh sách những cái họ thông dụng ở Việt Nam
+# We create ở list of common people's surnames in Vietnam
 ho_list = {'Trần', 'Hoàng', 'Trương', 'Lý', 'Vương', 'Ngô', 'Lưu', 'Thái', 'Dương', 'Từ', 'Tôn', 'Mã', 'Châu', 'Hồ',
            'Quách', 'Hà', 'Cao', 'Lâm', 'La', 'Trịnh', 'Lương', 'Hàn', 'Chu', 'Triệu', 'Nguyễn', 'Lê', 'Vũ', 'Võ',
            'Đường', 'Đinh', 'Đoàn', 'Trịnh', 'Đào', 'Phạm', 'Phùng', 'Mai', 'Tô', 'Phí', 'Tạ', 'Thân', 'Lâm', 'Tống',
@@ -170,6 +184,9 @@ ho_list = {'Trần', 'Hoàng', 'Trương', 'Lý', 'Vương', 'Ngô', 'Lưu', 'Th
            'Lỗ', 'Tiêu', 'Thẩm', 'Trình', 'Uông', 'Ung', 'Ưng', 'Vi', 'Văn', 'Yên', 'Nhâm', 'Doãn', 'Chung', 'Cáp',
            'Ái Tân Giác La', 'Thành Cát', 'Mãn', 'Nỗ Nhĩ ', 'Lã', 'Khuất', 'Khúc', 'Khâu', 'Khổng', 'Kha', 'Hứa', 'Cáp',
            'Bế', 'Bầnh', 'Chiêm', 'Chế', 'Cồ', 'Cổ', 'Phó', 'Hạ', 'Hầu', 'Kiều', 'Tùy', 'Lục', 'Đồng ', 'Đổng'}
+
+# Ta tạo danh sách những cái tên thông dụng ở Việt Nam
+# We create ở list of common people's names in Vietnam
 ten_list = {'Trung', 'Quân', 'Hải', 'Đức', 'Ân', 'An', 'Thịnh', 'Linh', 'Hiếu', 'Quốc', 'Duy', 'Tuấn', 'Tân', 'Đăng',
             'Nam', 'Thành', 'Việt', 'Khánh', 'Vũ', 'Phong', 'Cường', 'Tâm', 'Nhật', 'Sơn', 'Phúc', 'Thái', 'Lâm', 'Tấn',
             'Ngọc', 'Đạt', 'Hiệp', 'Tài', 'Dũng', 'Hồng', 'Huy', 'Hà', 'Khải', 'Thiện', 'Nghĩa ', 'Vương', 'Tiến',
@@ -179,6 +196,8 @@ ten_list = {'Trung', 'Quân', 'Hải', 'Đức', 'Ân', 'An', 'Thịnh', 'Linh',
             'Kim', 'Chung', 'Nhựt', 'Ưng', 'Thắm', 'Quỳnh', 'Giang', 'Quế', 'Quy', 'Quyết', 'Thất', 'Bát', 'Cửu', 'Tây',
             'Bắc', 'Tông', 'Tín', 'Kỳ', 'Thư', 'Cát', 'Tường', 'Kiều', 'Anh', 'Tuyền', 'Mĩ', 'Pháp', 'Vân', 'Văn'}
 
+# Tạo danh sách các địa chỉ bao gồm các quận và phường của quận đó ( bảo đảm tính thực tế )
+# WE create a list of address include of districs and their belonging wards ( assure reality )
 phuong_quan = {
     'Quận 1': ['Phường Tân Định', 'Phường Cầu Kho', 'Phường Cầu Ông Lãnh', 'Phường Cô Giang', 'Phường Nguyễn Cư Trinh',
                'Phường Đa Kao', 'Phường Bến Nghé', 'Phường Bến Thành', 'Phường Nguyễn Thái Bình',
@@ -410,6 +429,7 @@ with open('hs.csv', 'r', encoding='utf-8') as hs_file:
         cursor.execute(query, values)
 
 # Chuyển dữ liệu từ tệp CSV vào bảng hoc
+# 
 with open('hoc.csv', 'r', encoding='utf-8') as hoc_file:
     hoc_data = csv.reader(hoc_file)
     next(hoc_data)  # Bỏ qua dòng tiêu đề
@@ -420,19 +440,24 @@ with open('hoc.csv', 'r', encoding='utf-8') as hoc_file:
         cursor.execute(query, values)
 
 # Lưu các thay đổi vào cơ sở dữ liệu
+# Commit changes into the database
 conn.commit()
 
 # Đóng kết nối và con trỏ
+# CLose connection and he cursor
 cursor.close()
 conn.close()
 
 # Lưu thời điểm kết thúc
+# Save end time
 end_time = time.time()
 
 # Tính thời gian chạy
+# Calculate running time
 execution_time = end_time - start_time
 
 # In ra thời gian chạy
+# Print running time
 print(f"Đã thực thi xong câu 2, thời gian chạy câu 2 mất: {execution_time} giây = {execution_time / 60} phút")
 
 # Nếu gặp lỗi như thế này trong khi chạy:
