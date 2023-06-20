@@ -386,7 +386,7 @@ with open('hoc.csv', 'w', newline='', encoding='utf-8') as hoc_file:
     writer.writerows(hoc_data)
 
 # Ở đây vì em muốn nó mang 1 chút tính bảo mật, nên đã sử dụng 1 file cấu hình mạng để phòng khi mã nguồn có bị lộ ra thì các hacker vẫn không thể thực hiện sql injection được database gây mất mát dữ liệu
-# Ý tưởng em học được qua những ngày chơi CTF và học pentest trên mạng, và vì muốn bám sát thực tế nhất có thể nên em đã thêm vào
+# 
 
 # Đọc thông tin xác thực từ file cấu hình
 # with open('config.json') as config_file:
