@@ -14,8 +14,8 @@ def read_xml_file(xml_file_path, low_threshold, high_threshold):
         if low_threshold <= average_score <= high_threshold:
             print(f"Họ tên: {name}, Điểm TB: {average_score}")
 
-# Ví dụ sử dụng
-xml_file_path = "database1-Computer Science-2023-Excellent.xml"
+# Ví dụ sử dụng {tên database, tên trường; năm học; xếp loại học tập} 
+xml_file_path = "database1, Trường THPTT Lê Quý Đôn,2019-2020, Giỏi.xml"
 low_threshold = 7.0
 high_threshold = 9.0
 
