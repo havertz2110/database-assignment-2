@@ -264,7 +264,7 @@ phuong_quan = {
 ho_list = list(ho_list) #Chuyển ho_list thành 1 danh sách / Convert ho_list to a list
 ten_list = list(ten_list) # Chuyển tem_list thành 1 danh sách / Convert ten_list to a list
 
-hs_data = []  # Danh sách để lưu trữ dữ liệu học sinh /  Create a list to store student data
+hs_data = []  # Danh sách để lưu trữ dữ liệu /  Create a list to store data
 
 birth_years = [2004, 2005, 2006]  # Danh sách các năm sinh / List of birth years
 birth_years_weights = [1, 1, 1] # Trọng số cho mỗi năm sinh ( để đảm bảo các học sinh ở 3 lứa tuổi bằng nhau ) /  Weights for each birth year (ensure the same number of students of 3 ages)
@@ -337,16 +337,18 @@ def generate_kqua(xeploai):
     else:
         return "Hoàn thành"
 
-# Tạo danh sách năm học (NTNS)
-
-hoc_data = []
-
-                     
+hoc_data = [] # Danh sách để lưu trữ dữ liệu /  Create a list to store data
+             
 for i in range(1, 1000001):
     matr = random.choice(matr_list) # Chọn 1 matr ngâu nhiên / Choose a school code (matr) randomly
-    mahs = f"HS{i:07}"
-    ntns = mahs_to_ntns[mahs]
-    ntns_date = datetime.strptime(ntns, "%d/%m/%Y").date()  # Chuyển đổi NTNS thành đối tượng date
+  
+    mahs = f"HS{i:07}" # Tạo mã hs / Create mahs
+  
+    ntns = mahs_to_ntns[mahs] # Lấy ngày sinh tương ứng với mã hs đã được ánh xạ ở trên 
+    ntns_date = datetime.strptime(ntns, "%d/%m/%Y").date()  # Chuyển đổi NTNS thành đối tượng date / Change NTNS format from string to date
+
+    # Mục đích của phần code dưới đây đó là để tạo cho cột namhoc, vì bối cảnh là ở năm 2022 nên nếu 2004 sẽ có 3 năm học đó là 19-20,20-21,21-22 và cứ thế
+    # The purpose of the code below is to create the namhoc column, because the context is in 2022, so if 2004 there will be 3 school years that are 19-20, 20-21, 21-22 and so on.
     if ntns_date.year == 2004:
         for a in range(1, 4):
             if a == 1:
@@ -355,23 +357,23 @@ for i in range(1, 1000001):
                 namhoc = '2020-2021'
             elif a == 3:
                 namhoc = '2021-2022'
-            diemtb = round(random.uniform(0, 10), 1)
-            xeploai = generate_xeploai(diemtb)
-            ketqua = generate_kqua(xeploai)
-            hoc_data.append((matr, mahs, namhoc, diemtb, xeploai, ketqua))
+            diemtb = round(random.uniform(4, 10), 2) # Tạo điểm trung bình ngẫu nhiên / Create CGPA randomly
+            xeploai = generate_xeploai(diemtb) # Tạo xếp loại dựa trên điểm trung bình / Create rank based on CGPA
+            ketqua = generate_kqua(xeploai) # Tạo kết quả học tập dựa trên xếp loại / Create result based on rank
+            hoc_data.append((matr, mahs, namhoc, diemtb, xeploai, ketqua)) # Thêm dữ liệu học tập vào danh sách / Add data into the list
     elif ntns_date.year == 2005:
         for a in range(1, 3):
             if a == 1:
                 namhoc = '2020-2021'
             elif a == 2:
                 namhoc = '2021-2022'
-            diemtb = round(random.uniform(0, 10), 1)
+            diemtb = round(random.uniform(4, 10), 2)
             xeploai = generate_xeploai(diemtb)
             ketqua = generate_kqua(xeploai)
             hoc_data.append((matr, mahs, namhoc, diemtb, xeploai, ketqua))
     elif ntns_date.year == 2006:
         namhoc = '2021-2022'
-        diemtb = round(random.uniform(0, 10), 1)
+        diemtb = round(random.uniform(4, 10), 2)
         xeploai = generate_xeploai(diemtb)
         ketqua = generate_kqua(xeploai)
         hoc_data.append((matr, mahs, namhoc, diemtb, xeploai, ketqua))
@@ -382,8 +384,6 @@ with open('hoc.csv', 'w', newline='', encoding='utf-8') as hoc_file:
     writer = csv.writer(hoc_file)
     writer.writerow(['MATR', 'MAHS', 'NAMHOC', 'DIEMTB', 'XEPLOAI', 'KQUA'])
     writer.writerows(hoc_data)
-
-# PHẦN NÀY QUAN TRỌNG !!!
 
 # Ở đây vì em muốn nó mang 1 chút tính bảo mật, nên đã sử dụng 1 file cấu hình mạng để phòng khi mã nguồn có bị lộ ra thì các hacker vẫn không thể thực hiện sql injection được database gây mất mát dữ liệu
 # Ý tưởng em học được qua những ngày chơi CTF và học pentest trên mạng, và vì muốn bám sát thực tế nhất có thể nên em đã thêm vào
@@ -406,7 +406,7 @@ with open('hoc.csv', 'w', newline='', encoding='utf-8') as hoc_file:
 #    database=config['database']
 # )
 
-# ĐÃ HẾT PHẦN QUAN TRỌNG
+# ĐÃ HẾT  / END
 
 # Nhập thông tin kết nối trực tiếp
 # Enter direct connection information
