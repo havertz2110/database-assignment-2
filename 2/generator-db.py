@@ -409,7 +409,7 @@ with open('hoc.csv', 'w', newline='', encoding='utf-8') as hoc_file:
 # Nhập thông tin kết nối trực tiếp
 # Enter direct connection information
 host = "localhost" # Thông thường nếu cơ sở dữ liệu cũng nằm trên cùng 1 máy thì sẽ là "localhost" / Normally if the database is also on the same machine, it will be "localhost"
-user = "root" # 
+user = "root" # Thực hiện lệnh SELECT USER(); sẽ hiện ra <user>@<host> / Execute command SELECT USER(); will pop up <user>@<host>
 password = "211031" # Password MySQL của ta / Your MySQL password
 database = "truonghoc1"
 
