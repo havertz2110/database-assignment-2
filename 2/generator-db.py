@@ -385,14 +385,14 @@ with open('hoc.csv', 'w', newline='', encoding='utf-8') as hoc_file:
     writer.writerow(['MATR', 'MAHS', 'NAMHOC', 'DIEMTB', 'XEPLOAI', 'KQUA'])
     writer.writerows(hoc_data)
 
-# Ở đây vì em muốn nó mang 1 chút tính bảo mật, nên đã sử dụng 1 file cấu hình mạng để phòng khi mã nguồn có bị lộ ra thì các hacker vẫn không thể thực hiện sql injection được database gây mất mát dữ liệu
-# 
+# Nếu có thể, ta hãy thêm 1 chút tính bảo mật vào bài làm này, ta sẽ sử dụng 1 file cấu hình mạng để phòng khi mã nguồn có bị lộ ra thì các hacker vẫn không thể thực hiện sql injection được database gây mất mát dữ liệu
+# If possible, let's add a little security to this exercise, we will use a network configuration file so that in case the source code is exposed, hackers still cannot perform sql injection.
 
-# Đọc thông tin xác thực từ file cấu hình
+# Đọc thông tin xác thực từ file cấu hình / Read the configuration file
 # with open('config.json') as config_file:
 #   config = json.load(config_file)
 
-# File cấu hình chính là file config.json, trong đó chứa thông tin như này:
+# Các thông tin trong file cấu hình ( config.json ) / Information in the config file ( config.json ) 
 # {
 #  "host": "localhost",
 #  "user": "root",
@@ -462,6 +462,8 @@ with open('hoc.csv', 'r', encoding='utf-8') as hoc_file:
         query = "INSERT IGNORE INTO HOC VALUES (%s, %s, %s, %s, %s, %s)" # INSERT IGNORE để bỏ qua các giá trị trùng ( vì nó phải có ) / INSERT IGNORE to to ignore duplicate values (as it should be)
         values = (matr, mahs, namhoc, diemtb, xeploai, ketqua)
         cursor.execute(query, values)
+
+#Lưu ý cách chuyển dữ liệu như trên sẽ giúp ta tránh được bị SQL injection / Note that transferring data this way may help us preventing SQL Injection
 
 # Lưu các thay đổi vào cơ sở dữ liệu
 # Commit changes into the database
