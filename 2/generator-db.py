@@ -278,26 +278,32 @@ random.shuffle(cccd_numbers_female)  # Sắp xếp ngẫu nhiên / Randomize tho
 mahs_to_ntns = {} # Sử dụng dictionary để ánh xạ mahs sang ntns tương ứng/ Dictionary to map student codes (mahs) to birth dates (ntns)
 
 for i in range(1, 1000001):
-    mahs = f"HS{i:07}"
-    ho = random.choice(ho_list)
-    ten = random.choice(ten_list)
+    mahs = f"HS{i:07}" # Tạo 1 mahs / Generate a student code (mahs)
+  
+    ho = random.choice(ho_list) # Lấy 1 cái họ ngẫu nhiên từ danh sách / take a random surname from the list
+    ten = random.choice(ten_list) # Lấy 1 cái tên ngẫu nhiên từ danh sách / take a random name from the list 
+  
     if i <= 500000:
-        gioi_tinh = "M"
-        cccd = f"M{cccd_numbers_male[i - 1]:06}"
+        gioi_tinh = "M" # Giới tính nam / Male 
+        cccd = f"M{cccd_numbers_male[i - 1]:06}" # tạo số căn cước công dân / generate the id number
     else:
-        gioi_tinh = "F"
-        cccd = f"F{cccd_numbers_female[i - 500001]:06}"
-    birth_year = random.choices(birth_years, weights=birth_years_weights)[0]
-    birth_year_counter[birth_year] += 1
-    min_birth_date = date(birth_year, 1, 1)
-    max_birth_date = date(birth_year, 12, 31)
-    random_birth_date = min_birth_date + timedelta(days=random.randint(0, 365))
-    ntns = random_birth_date.strftime("%d/%m/%Y")
-    mahs_to_ntns[mahs] = ntns
-    quan = choice(list(phuong_quan.keys()))
-    phuong = choice(phuong_quan[quan])
-    dia_chi = f"{phuong}, {quan}, Thành phố Hồ Chí Minh"
-    hs_data.append((mahs, ho, ten, cccd, ntns, dia_chi))
+        gioi_tinh = "F" # Giới tính nữ / Female
+        cccd = f"F{cccd_numbers_female[i - 500001]:06}"  # tạo số căn cước công dân / generate the id number
+    # Dẫn đến số cccd dưới 500k là nam, ngược lại là nữ / This leads to one who has their id number below 500k is male and vice versa 
+  
+    birth_year = random.choices(birth_years, weights=birth_years_weights)[0]  # Randomly select a birth year
+    birth_year_counter[birth_year] += 1 # Increment the counter for the selected birth year
+    min_birth_date = date(birth_year, 1, 1) # Minimum birth date for the selected birth year
+    max_birth_date = date(birth_year, 12, 31) # Maximum birth date for the selected birth year
+    random_birth_date = min_birth_date + timedelta(days=random.randint(0, 365)) # Generate a random birth date within the year
+    ntns = random_birth_date.strftime("%d/%m/%Y")  # Format the birth date as a string
+    mahs_to_ntns[mahs] = ntns  # Map the student code to the birth date
+  
+    quan = choice(list(phuong_quan.keys())) #  Select a random district
+    phuong = choice(phuong_quan[quan]) #  Select a random ward within district
+    dia_chi = f"{phuong}, {quan}, Thành phố Hồ Chí Minh" # Format the address
+  
+    hs_data.append((mahs, ho, ten, cccd, ntns, dia_chi)) # Add the student data to the list
 
 # Ghi dữ liệu vào tệp CSV
 # Write generated data into CSV file
