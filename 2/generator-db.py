@@ -261,22 +261,22 @@ phuong_quan = {
                       'Xã Tam Thôn Hiệp', 'Xã Thạnh An'],
 }
 
-#
-#
-ho_list = list(ho_list)
-ten_list = list(ten_list)
+ho_list = list(ho_list) #Chuyển ho_list thành 1 danh sách / Convert ho_list to a list
+ten_list = list(ten_list) # Chuyển tem_list thành 1 danh sách / Convert ten_list to a list
 
-#
-#
-hs_data = []
-birth_years = [2004, 2005, 2006]
-birth_years_weights = [1, 1, 1]
-cccd_numbers_male = list(range(1, 500001))  # Số căn cước công dân cho giới tính nam
-cccd_numbers_female = list(range(1, 500001))  # Số căn cước công dân cho giới tính nữ
-random.shuffle(cccd_numbers_male)  # Sắp xếp ngẫu nhiên
-random.shuffle(cccd_numbers_female)  # Sắp xếp ngẫu nhiên
+hs_data = []  # Danh sách để lưu trữ dữ liệu học sinh /  Create a list to store student data
+
+birth_years = [2004, 2005, 2006]  # Danh sách các năm sinh / List of birth years
+birth_years_weights = [1, 1, 1] # Trọng số cho mỗi năm sinh ( để đảm bảo các học sinh ở 3 lứa tuổi bằng nhau ) /  Weights for each birth year (ensure the same number of students of 3 ages)
 birth_year_counter = Counter()  # Đếm số lượng học sinh theo từng năm sinh
-mahs_to_ntns = {}
+
+cccd_numbers_male = list(range(1, 500001))  # Số căn cước công dân cho giới tính nam / ID number for male
+cccd_numbers_female = list(range(1, 500001))  # Số căn cước công dân cho giới tính nữ / ID number for female
+random.shuffle(cccd_numbers_male)  # Sắp xếp ngẫu nhiên / Randomize those numbers above
+random.shuffle(cccd_numbers_female)  # Sắp xếp ngẫu nhiên / Randomize those numbers above
+
+mahs_to_ntns = {} # Sử dụng dictionary để ánh xạ mahs sang ntns tương ứng/ Dictionary to map student codes (mahs) to birth dates (ntns)
+
 for i in range(1, 1000001):
     mahs = f"HS{i:07}"
     ho = random.choice(ho_list)
@@ -300,16 +300,17 @@ for i in range(1, 1000001):
     hs_data.append((mahs, ho, ten, cccd, ntns, dia_chi))
 
 # Ghi dữ liệu vào tệp CSV
+# Write generated data into CSV file
 with open('hs.csv', 'w', newline='', encoding='utf-8') as hs_file:
     writer = csv.writer(hs_file)
     writer.writerow(['MAHS', 'HO', 'TEN', 'CCCD', 'NTNS', 'DCHI_HS'])
     writer.writerows(hs_data)
 
-# tạo dữ liệu cho bảng hoc
-#
+# Sau khi kết thúc tạo bảng HS, ta tạo dữ liệu cho bảng HOC
+# After creating table HS, we move further on table HOC
 
-#
-#
+# Thứ nhất, ta tạo 1 hàm để xếp loại hpc sinh dựa trên điểm trung bình (diemtb) của chúng
+# First, we create a function for student ranking based on their CGPA  (diemtb)
 def generate_xeploai(diemtb):
     if diemtb >= 9.0:
         return "Xuất sắc"
@@ -322,8 +323,8 @@ def generate_xeploai(diemtb):
     else:
         return "Yếu"
 
-# Tạo 1 hàm đê tính kết quả năm học dựa trên xếp loại
-# Create 
+# Thứ hai, ta tạo 1 hàm đê tính kết quả năm học dựa trên xếp loại của chúng
+# Second, we create a function for student grading based on their ranking
 def generate_kqua(xeploai):
     if xeploai == "Yếu":
         return "Chưa hoàn thành"
@@ -368,6 +369,7 @@ for i in range(1, 1000001):
         hoc_data.append((matr, mahs, namhoc, diemtb, xeploai, ketqua))
 
 # GHi dữ liệu vào tập csv
+# Write generate data into CSV file
 with open('hoc.csv', 'w', newline='', encoding='utf-8') as hoc_file:
     writer = csv.writer(hoc_file)
     writer.writerow(['MATR', 'MAHS', 'NAMHOC', 'DIEMTB', 'XEPLOAI', 'KQUA'])
