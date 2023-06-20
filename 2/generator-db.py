@@ -1,3 +1,5 @@
+# Khai báo các thư viện cần thiết
+# declare some necessary libraries
 import csv
 import json
 import mysql.connector
@@ -303,10 +305,11 @@ with open('hs.csv', 'w', newline='', encoding='utf-8') as hs_file:
     writer.writerow(['MAHS', 'HO', 'TEN', 'CCCD', 'NTNS', 'DCHI_HS'])
     writer.writerows(hs_data)
 
-
 # tạo dữ liệu cho bảng hoc
+#
 
-
+#
+#
 def generate_xeploai(diemtb):
     if diemtb >= 9.0:
         return "Xuất sắc"
@@ -396,12 +399,14 @@ with open('hoc.csv', 'w', newline='', encoding='utf-8') as hoc_file:
 # ĐÃ HẾT PHẦN QUAN TRỌNG
 
 # Nhập thông tin kết nối trực tiếp
-host = "localhost"
-user = "root"
-password = "211031"
+# Enter direct connection information
+host = "localhost" # Thông thường nếu cơ sở dữ liệu cũng nằm trên cùng 1 máy thì sẽ là "localhost" / Normally if the database is also on the same machine, it will be "localhost"
+user = "root" # 
+password = "211031" # Password MySQL của ta / Your MySQL password
 database = "truonghoc1"
 
 # Thiết lập kết nối với cơ sở dữ liệu MySQL
+# Deploy connection to MySQL database
 conn = mysql.connector.connect(
     host=host,
     user=user,
@@ -410,6 +415,7 @@ conn = mysql.connector.connect(
 )
 
 # Tạo con trỏ để thực hiện các truy vấn
+# Create a cursor to execute queries
 cursor = conn.cursor()
 
 # Chuyển dữ liệu từ tệp CSV vào bảng TRUONG
@@ -434,14 +440,14 @@ with open('hs.csv', 'r', encoding='utf-8') as hs_file:
         values = (mahs, ho, ten, cccd, ntns, dia_chi)
         cursor.execute(query, values)
 
-# Chuyển dữ liệu từ tệp CSV vào bảng hoc
+# Chuyển dữ liệu từ tệp CSV vào bảng HOC
 # Transfer data from csv file to table HOC
 with open('hoc.csv', 'r', encoding='utf-8') as hoc_file:
     hoc_data = csv.reader(hoc_file)
     next(hoc_data)  # Bỏ qua dòng tiêu đề
     for row in hoc_data:
         matr, mahs, namhoc, diemtb, xeploai, ketqua = row
-        query = "INSERT IGNORE INTO HOC VALUES (%s, %s, %s, %s, %s, %s)"
+        query = "INSERT IGNORE INTO HOC VALUES (%s, %s, %s, %s, %s, %s)" # INSERT IGNORE để bỏ qua các giá trị trùng ( vì nó phải có ) / INSERT IGNORE to to ignore duplicate values (as it should be)
         values = (matr, mahs, namhoc, diemtb, xeploai, ketqua)
         cursor.execute(query, values)
 
