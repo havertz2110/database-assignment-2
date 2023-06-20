@@ -387,9 +387,11 @@ with open('hoc.csv', 'w', newline='', encoding='utf-8') as hoc_file:
 
 # Ở đây vì em muốn nó mang 1 chút tính bảo mật, nên đã sử dụng 1 file cấu hình mạng để phòng khi mã nguồn có bị lộ ra thì các hacker vẫn không thể thực hiện sql injection được database gây mất mát dữ liệu
 # Ý tưởng em học được qua những ngày chơi CTF và học pentest trên mạng, và vì muốn bám sát thực tế nhất có thể nên em đã thêm vào
+
 # Đọc thông tin xác thực từ file cấu hình
 # with open('config.json') as config_file:
 #   config = json.load(config_file)
+
 # File cấu hình chính là file config.json, trong đó chứa thông tin như này:
 # {
 #  "host": "localhost",
@@ -398,7 +400,7 @@ with open('hoc.csv', 'w', newline='', encoding='utf-8') as hoc_file:
 #  "database": "truonghoc1",
 # }
 
-# Thiết lập kết nối với cơ sở dữ liệu MySQL
+# Thiết lập kết nối với cơ sở dữ liệu MySQL / Deploy connection to MySQL database
 # conn = mysql.connector.connect(
 #    host=config['host'],
 #    user=config['user'],
