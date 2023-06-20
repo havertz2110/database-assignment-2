@@ -337,11 +337,13 @@ def generate_kqua(xeploai):
     else:
         return "Hoàn thành"
 
-
 # Tạo danh sách năm học (NTNS)
+
 hoc_data = []
+
+                     
 for i in range(1, 1000001):
-    matr = random.choice(matr_list)
+    matr = random.choice(matr_list) # Chọn 1 matr ngâu nhiên / Choose a school code (matr) randomly
     mahs = f"HS{i:07}"
     ntns = mahs_to_ntns[mahs]
     ntns_date = datetime.strptime(ntns, "%d/%m/%Y").date()  # Chuyển đổi NTNS thành đối tượng date
