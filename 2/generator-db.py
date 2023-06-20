@@ -330,7 +330,7 @@ def generate_xeploai(diemtb):
         return "Yếu"
 
 # Thứ hai, ta tạo 1 hàm đê tính kết quả năm học dựa trên xếp loại của chúng
-# Second, we create a function for student grading based on their ranking
+# Second, we create a function for student's result based on their ranking
 def generate_kqua(xeploai):
     if xeploai == "Yếu":
         return "Chưa hoàn thành"
