@@ -1,17 +1,44 @@
-import sqlite3
+import mysql.connector
 import xml.etree.ElementTree as ET
 import time
 
-def query_database(database_name, field_name, school_year, academic_rank):
-    # Tạo kết nối đến cơ sở dữ liệu
-    conn = sqlite3.connect(database_name)
+
+def query_database():
+    # Người dùng nhập thông tin
+    input_str = input("Nhập tên cơ sở dữ liệu, tên lĩnh vực, năm học, xếp hạng học tập (cách nhau bằng dấu phẩy): ")
+
+    # Tách chuỗi nhập vào thành các phần tử riêng biệt
+    inputs = input_str.split(",")
+
+    # Gán giá trị cho các biến tương ứng
+    database_name = inputs[0].strip()
+    ten_truong = inputs[1].strip()
+    nam_hoc = inputs[2].strip()
+    xep_loai = inputs[3].strip()
+
+    # Thiết lập kết nối với cơ sở dữ liệu MySQL
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="211031",
+        database="truonghoc1"
+    )
+
+    # Tạo con trỏ để thực hiện các truy vấn
     cursor = conn.cursor()
 
     # Đo thời gian thực hiện truy vấn
     start_time = time.time()
 
     # Truy vấn dữ liệu từ cơ sở dữ liệu
-    query = f"SELECT * FROM students WHERE field = '{field_name}' AND year = '{school_year}' AND rank = '{academic_rank}'"
+    query = f"""
+            SELECT hs.ho, hs.ten, hs.ntns, hoc.diemtb, hoc.xeploai, hoc.kqua
+    	    FROM truong
+    	    JOIN hoc ON truong.matr = hoc.matr
+    	    JOIN hs ON hoc.mahs = hs.mahs
+    	    WHERE truong.tentr = '{ten_truong}' AND hoc.namhoc = '{nam_hoc}' AND hoc.xeploai = '{xep_loai}';
+        """
+
     cursor.execute(query)
     results = cursor.fetchall()
 
@@ -29,28 +56,19 @@ def query_database(database_name, field_name, school_year, academic_rank):
     xml_root = ET.Element("students")
     for row in results:
         student_element = ET.SubElement(xml_root, "student")
-        ET.SubElement(student_element, "name").text = row[0]
-        ET.SubElement(student_element, "dob").text = row[1]
-        ET.SubElement(student_element, "average_score").text = str(row[2])
-        ET.SubElement(student_element, "academic_rank").text = row[3]
-        ET.SubElement(student_element, "result").text = row[4]
-    
+        ET.SubElement(student_element, "ho_ten").text = row[0]
+        ET.SubElement(student_element, "ntns").text = row[1]
+        ET.SubElement(student_element, "diem_tb").text = str(row[2])
+        ET.SubElement(student_element, "xep_loai").text = row[3]
+        ET.SubElement(student_element, "ket_qua").text = row[4]
+
     xml_tree = ET.ElementTree(xml_root)
-    xml_filename = f"{database_name}-{field_name}-{school_year}-{academic_rank}.xml"
+    xml_filename = f"{database_name}-{ten_truong}-{nam_hoc}-{xep_loai}.xml"
     xml_tree.write(xml_filename)
 
     # Đóng kết nối cơ sở dữ liệu
     conn.close()
 
-# Ví dụ sử dụng
-database_name1 = "database1.db"
-database_name2 = "database2.db"
-field_name = "Computer Science"
-school_year = "2023"
-academic_rank = "Excellent"
 
-# Truy vấn cơ sở dữ liệu 1
-query_database(database_name1, field_name, school_year, academic_rank)
-
-# Truy vấn cơ sở dữ liệu 2
-query_database(database_name2, field_name, school_year, academic_rank)
+# Sử dụng hàm truy vấn cơ sở dữ liệu
+query_database()
