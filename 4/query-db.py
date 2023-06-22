@@ -6,7 +6,7 @@ from tabulate import tabulate
 
 def query_database():
     # Người dùng nhập thông tin / User input
-    input_str = input("Nhập tên cơ sở dữ liệu, tên lĩnh vực, năm học, xếp hạng học tập (cách nhau bằng dấu phẩy): ")
+    input_str = input("Nhập tên cơ sở dữ liệu, tên trường, năm học, xếp hạng học tập (cách nhau bằng dấu phẩy): ")
 
     # Tách chuỗi nhập vào thành các phần tử riêng biệt / Splitting the input string into separate elements
     inputs = input_str.split(",")
@@ -17,12 +17,21 @@ def query_database():
     nam_hoc = inputs[2].strip()
     xep_loai = inputs[3].strip()
 
+    # Thiết lập tên cơ sở dữ liệu dựa trên giá trị nhập vào /Establish database name based on the input
+    if database_name == "truonghoc1":
+        database = "truonghoc1"
+    elif database_name == "truonghoc2":
+        database = "truonghoc1"
+    else:
+        print("Tên cơ sở dữ liệu không hợp lệ.")
+        return
+
     # Thiết lập kết nối với cơ sở dữ liệu MySQL / Establishing a connection with the MySQL database
     conn = mysql.connector.connect(
         host="localhost",
         user="root",
         password="211031",
-        database="truonghoc1"
+        database=database
     )
 
     # Tạo con trỏ để thực hiện các truy vấn / Creating a cursor to perform queries
