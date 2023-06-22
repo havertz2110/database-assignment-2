@@ -61,12 +61,13 @@ def query_database():
     # Tạo và xuất file XML
     xml_root = ET.Element("students")
     for row in results:
+        full_name = f"{row[0]} {row[1]}"
         student_element = ET.SubElement(xml_root, "student")
-        ET.SubElement(student_element, "ho_ten").text = row[0]
-        ET.SubElement(student_element, "ntns").text = row[1]
-        ET.SubElement(student_element, "diem_tb").text = str(row[2])
-        ET.SubElement(student_element, "xep_loai").text = row[3]
-        ET.SubElement(student_element, "ket_qua").text = row[4]
+        ET.SubElement(student_element, "ho_ten").text = full_name
+        ET.SubElement(student_element, "ntns").text = row[2]
+        ET.SubElement(student_element, "diem_tb").text = str(row[3])
+        ET.SubElement(student_element, "xep_loai").text = row[4]
+        ET.SubElement(student_element, "ket_qua").text = row[5]
 
     xml_tree = ET.ElementTree(xml_root)
     xml_filename = f"{database_name}-{ten_truong}-{nam_hoc}-{xep_loai}.xml"
