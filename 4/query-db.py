@@ -1,7 +1,7 @@
 import mysql.connector
 import xml.etree.ElementTree as ET
 import time
-
+from tabulate import tabulate
 
 def query_database():
     # Người dùng nhập thông tin
@@ -46,21 +46,28 @@ def query_database():
     end_time = time.time()
     query_time = end_time - start_time
 
-    # In danh sách học sinh và đoạn thời gian truy vấn
-    print("Danh sách học sinh:")
-    for row in results:
-        print(f"Họ tên: {row[0]}, NTNS: {row[1]}, Điểm TB: {row[2]}, Xếp loại: {row[3]}, Kết quả: {row[4]}")
-    print(f"Thời gian truy vấn: {query_time} giây")
 
+    table = []
+
+    for row in results:
+        full_name = f"{row[0]} {row[1]}"
+        table.append([full_name, row[2], row[3], row[4], row[5]])
+
+    headers = ["Họ tên", "NTNS", "Điểm TB", "Xếp loại", "Kết quả"]
+
+    print(tabulate(table, headers, tablefmt="fancy_grid"))
+    print(f"Thời gian truy vấn: {query_time} giây")
+    #truonghoc1,THPT Lê Quý Đôn,2019-2020,Giỏi
     # Tạo và xuất file XML
     xml_root = ET.Element("students")
     for row in results:
+        full_name = f"{row[0]} {row[1]}"
         student_element = ET.SubElement(xml_root, "student")
-        ET.SubElement(student_element, "ho_ten").text = row[0]
-        ET.SubElement(student_element, "ntns").text = row[1]
-        ET.SubElement(student_element, "diem_tb").text = str(row[2])
-        ET.SubElement(student_element, "xep_loai").text = row[3]
-        ET.SubElement(student_element, "ket_qua").text = row[4]
+        ET.SubElement(student_element, "ho_ten").text = full_name
+        ET.SubElement(student_element, "ntns").text = row[2]
+        ET.SubElement(student_element, "diem_tb").text = str(row[3])
+        ET.SubElement(student_element, "xep_loai").text = row[4]
+        ET.SubElement(student_element, "ket_qua").text = row[5]
 
     xml_tree = ET.ElementTree(xml_root)
     xml_filename = f"{database_name}-{ten_truong}-{nam_hoc}-{xep_loai}.xml"
