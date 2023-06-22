@@ -184,7 +184,7 @@ ho_list = {'Trần', 'Hoàng', 'Trương', 'Lý', 'Vương', 'Ngô', 'Lưu', 'Th
            'Hoa', 'Từ', 'Thường', 'Tiêu', 'Ngọ', 'Kim', 'Tôn Thất', 'Triệu', 'Mạc', 'Thái', 'Thạch', 'Quách', 'Đàm',
            'Đồng Văn', 'Huỳnh', 'Phan', 'Đặng', 'Bùi', 'Hồ', 'Đỗ', 'Âu Dương', 'Dư', 'Nghiêm', 'Viên', 'Ma', 'Mạch',
            'Lỗ', 'Tiêu', 'Thẩm', 'Trình', 'Uông', 'Ung', 'Ưng', 'Vi', 'Văn', 'Yên', 'Nhâm', 'Doãn', 'Chung', 'Cáp',
-           'Ái Tân Giác La', 'Thành Cát', 'Mãn', 'Nỗ Nhĩ ', 'Lã', 'Khuất', 'Khúc', 'Khâu', 'Khổng', 'Kha', 'Hứa', 'Cáp',
+           'Ái Tân Giác La', 'Thành Cát', 'Mãn', 'Nỗ Nhĩ', 'Lã', 'Khuất', 'Khúc', 'Khâu', 'Khổng', 'Kha', 'Hứa', 'Cáp',
            'Bế', 'Bầnh', 'Chiêm', 'Chế', 'Cồ', 'Cổ', 'Phó', 'Hạ', 'Hầu', 'Kiều', 'Tùy', 'Lục', 'Đồng ', 'Đổng'}
 
 # Ta tạo danh sách những cái tên thông dụng ở Việt Nam
