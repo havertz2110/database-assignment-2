@@ -418,7 +418,7 @@ password = "211031" # Password MySQL của ta / Your MySQL password
 database = "truonghoc1"
 
 # Thiết lập kết nối với cơ sở dữ liệu MySQL
-# Deploy connection to MySQL database
+# Establish connection to MySQL database
 conn = mysql.connector.connect(
     host=host,
     user=user,
@@ -470,7 +470,7 @@ with open('hoc.csv', 'r', encoding='utf-8') as hoc_file:
 conn.commit()
 
 # Đóng kết nối và con trỏ
-# CLose connection and he cursor
+# CLose connection and the cursor
 cursor.close()
 conn.close()
 
